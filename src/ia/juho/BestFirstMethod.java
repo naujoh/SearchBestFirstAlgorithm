@@ -46,7 +46,7 @@ public class BestFirstMethod {
                         //c) Si q estaba en ABIERTOSo en CERRADOS,
                         //comparar el nuevo valor f(q) con el anterior.
                         oldF = getInitToN(currentNode, open, close);
-                        if (oldF < f) {
+                        if (f < oldF) {
                             //Si el nuevo es menor, colocar EA como nuevo padre 
                             //y asignar el nuevo valor f(q).                            
                             open.replace(currentNode.p, new Data(ea.getKey(), f));
@@ -60,14 +60,16 @@ public class BestFirstMethod {
                     } else { //b) Si q no estaba en ABIERTOS ni en CERRADOS,
                         //colocarlo en ABIERTOS, asignando el valor f(q)
                         open.put(currentNode.p, new Data(ea.getKey(), f));
-
                     }
                 }
 
             }
             // 7. Reordenar ABIERTOSsegún valores crecientes de f.
             open = sortHashAscendingly(open);
-
+            for(Map.Entry<Character, Data> en: open.entrySet()) {
+                System.out.println(en.getKey() + " " +en.getValue().f + " " + en.getValue().p);
+            }
+            System.out.println("===================");
         }
         System.out.println("No se encontro el nodo buscado");
     }
@@ -176,9 +178,7 @@ public class BestFirstMethod {
 
         LinkedHashMap<Character, Data> sortedByValue = new LinkedHashMap<>(listOfEntries.size());
 
-        listOfEntries.forEach((entry) -> {
-            sortedByValue.put(entry.getKey(), entry.getValue());
-        });
+        listOfEntries.forEach((entry) -> sortedByValue.put(entry.getKey(), entry.getValue()));
 
         return sortedByValue;
     }
